@@ -1,0 +1,32 @@
+services:
+  desafio-db:
+    container_name: desafio-postgres
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: rootuser
+      POSTGRES_PASSWORD: rootpwd
+      POSTGRES_DB: desafio
+    volumes:
+      - postgres:/data/postgres
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - desafio
+
+  desafio-api:
+    build: .
+    container_name: desafio-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - desafio-db
+    networks:
+      - desafio
+
+networks:
+  desafio:
+    driver: bridge
+
+volumes:
+  postgres:
