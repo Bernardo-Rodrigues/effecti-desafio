@@ -9,15 +9,18 @@ import java.util.List;
 
 @Entity
 @Table(name = "modalities")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Modality {
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String name;
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "modality", cascade = CascadeType.ALL)
     List<Bid> bids = new ArrayList<>();

@@ -131,7 +131,7 @@ public class WebCrawler implements CommandLineRunner {
 
     private String extractNullableInformation(Element element){
         if(element != null) {
-            return element.text().replaceAll("(Objeto|Entidade|Local):\\s+", "");
+            return element.text().replaceAll("(Objeto|Entidade|Local|Setor responsável):\\s+", "");
         }
         return null;
     }
