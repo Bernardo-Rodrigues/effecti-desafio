@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BidResponse {
+    @JsonProperty("id")
     Integer id;
     @JsonProperty("modalidade")
     Modality modality;
