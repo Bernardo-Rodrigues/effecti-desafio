@@ -5,18 +5,42 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT users_pkey PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS public.modalities
+(
+    id integer NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT modalities_pkey PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS public.bids
 (
     id integer NOT NULL,
-    description character varying(255) COLLATE pg_catalog."default",
+    description text COLLATE pg_catalog."default",
     entity character varying(255) COLLATE pg_catalog."default",
-    local character varying(255) COLLATE pg_catalog."default",
+    local text COLLATE pg_catalog."default",
     name character varying(255) COLLATE pg_catalog."default",
-    opening_date timestamp(6) without time zone,
-    portal character varying(255) COLLATE pg_catalog."default",
+    opening_date date,
     sector character varying(255) COLLATE pg_catalog."default",
     value double precision,
-    CONSTRAINT bids_pkey PRIMARY KEY (id)
+    modality_id integer,
+    CONSTRAINT bids_pkey PRIMARY KEY (id),
+    CONSTRAINT fkf009gm6glwsgpfdf6utyxvpt7 FOREIGN KEY (modality_id)
+        REFERENCES public.modalities (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS public.edicts
+(
+    id integer NOT NULL,
+    link character varying(255) COLLATE pg_catalog."default",
+    name character varying(255) COLLATE pg_catalog."default",
+    bid_id integer,
+    CONSTRAINT edicts_pkey PRIMARY KEY (id),
+    CONSTRAINT fk49bh0el3uo62lmak0uj8p86pn FOREIGN KEY (bid_id)
+        REFERENCES public.bids (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
 CREATE TABLE IF NOT EXISTS public.readings
@@ -29,18 +53,6 @@ CREATE TABLE IF NOT EXISTS public.readings
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT fktb04lmwcldfj0h1pnxa7k4mvs FOREIGN KEY (bid_id)
-        REFERENCES public.bids (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-CREATE TABLE IF NOT EXISTS public.edicts
-(
-    id integer NOT NULL,
-    link character varying(255) COLLATE pg_catalog."default",
-    bid_id integer,
-    CONSTRAINT edicts_pkey PRIMARY KEY (id),
-    CONSTRAINT fk49bh0el3uo62lmak0uj8p86pn FOREIGN KEY (bid_id)
         REFERENCES public.bids (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

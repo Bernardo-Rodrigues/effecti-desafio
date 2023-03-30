@@ -17,6 +17,7 @@ public class Edict {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    String name;
     String link;
     @ManyToOne
     @JoinColumn(name = "bidId")

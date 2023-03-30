@@ -1,9 +1,13 @@
 package com.bernardo.desafio.config;
 
 import com.bernardo.desafio.model.entities.Bid;
+import com.bernardo.desafio.model.entities.Edict;
 import com.bernardo.desafio.model.entities.Modality;
 import com.bernardo.desafio.repositories.BidRepository;
+import com.bernardo.desafio.repositories.EdictRepository;
 import com.bernardo.desafio.repositories.ModalityRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -23,15 +27,20 @@ public class WebCrawler implements CommandLineRunner {
     final String HOME_PATH = "https://www.agrolandia.sc.gov.br";
     final String BIDS_MODALITIES_PATH = HOME_PATH + "/licitacoes";
     final List<String> MONTHS = new ArrayList<>(Arrays.asList("jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"));
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebCrawler.class);
     List<String> tableColumns = new ArrayList<>();
+
     @Autowired
     ModalityRepository modalityRepository;
     @Autowired
     BidRepository bidRepository;
+    @Autowired
+    EdictRepository edictRepository;
 
     @Override
     public void run(String... args)  {
         navigateModalitiesPage();
+        LOGGER.info("Web crawling complete");
     }
 
     private void navigateModalitiesPage(){
@@ -100,7 +109,21 @@ public class WebCrawler implements CommandLineRunner {
                                         .local(local)
                                         .value(value)
                                         .build();
-                                bidRepository.save(bid);
+                                Bid savedBid = bidRepository.save(bid);
+
+                                Element bidEdictsElement = bidPage.getElementsByClass("docs").first();
+                                bidEdictsElement.getElementsByTag("a").forEach(
+                                        (a) -> {
+                                            String link = a.attr("href");
+                                            String edictName = a.getElementsByTag("strong").text();
+                                            Edict edict = Edict.builder()
+                                                    .link(HOME_PATH + link)
+                                                    .name(edictName)
+                                                    .bid(savedBid)
+                                                    .build();
+                                            edictRepository.save(edict);
+                                        }
+                                );
                             }
                         }
                 );
