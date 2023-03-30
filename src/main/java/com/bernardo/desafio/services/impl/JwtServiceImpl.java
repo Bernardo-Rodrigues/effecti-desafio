@@ -1,10 +1,12 @@
 package com.bernardo.desafio.services.impl;
 
 import com.bernardo.desafio.model.dto.UserDto;
+import com.bernardo.desafio.model.exception.BadRequestException;
 import com.bernardo.desafio.model.exception.UnauthorizedException;
 import com.bernardo.desafio.model.mapper.UserMapper;
 import com.bernardo.desafio.repositories.UserRepository;
 import com.bernardo.desafio.services.JwtService;
+import com.fasterxml.jackson.core.JsonParseException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -44,6 +46,10 @@ public class JwtServiceImpl implements JwtService {
             throw new UnauthorizedException("JWT invalid signature");
         } catch (ExpiredJwtException e) {
             throw new UnauthorizedException("JWT expired");
+        } catch (MalformedJwtException e){
+            throw new BadRequestException("Wrong format of JWT");
+        } catch (JsonParseException e){
+            throw new BadRequestException("Wrong format of JWT");
         }
     }
 

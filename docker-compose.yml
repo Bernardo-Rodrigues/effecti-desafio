@@ -14,6 +14,22 @@ services:
     networks:
       - desafio
 
+  desafio-db-test:
+    container_name: desafio-postgres-test
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: rootuser
+      POSTGRES_PASSWORD: rootpwd
+      POSTGRES_DB: desafio-test
+    volumes:
+      - postgres-test:/data/postgres
+      - ./init-test.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"
+    networks:
+      - desafio
+
+
   desafio-api:
     build: .
     container_name: desafio-api
@@ -30,3 +46,4 @@ networks:
 
 volumes:
   postgres:
+  postgres-test:

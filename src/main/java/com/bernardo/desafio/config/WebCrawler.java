@@ -21,8 +21,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
+@Profile("prod")
 public class WebCrawler implements CommandLineRunner {
     final String HOME_PATH = "https://www.agrolandia.sc.gov.br";
     final String BIDS_MODALITIES_PATH = HOME_PATH + "/licitacoes";
