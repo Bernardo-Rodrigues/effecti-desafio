@@ -6,9 +6,9 @@ import com.bernardo.desafio.model.exception.UnauthorizedException;
 import com.bernardo.desafio.model.mapper.UserMapper;
 import com.bernardo.desafio.repositories.UserRepository;
 import com.bernardo.desafio.services.JwtService;
-import com.fasterxml.jackson.core.JsonParseException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParseException;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
