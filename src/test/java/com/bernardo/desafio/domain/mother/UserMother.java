@@ -1,6 +1,7 @@
 package com.bernardo.desafio.domain.mother;
 
 import com.bernardo.desafio.model.dto.UserDto;
+import com.bernardo.desafio.model.entities.User;
 import com.bernardo.desafio.model.request.CreateUserRequest;
 
 public class UserMother {
@@ -13,6 +14,13 @@ public class UserMother {
 
     public static UserDto getUserDto(){
         return UserDto.builder()
+                .id(1)
+                .name("user-test-1")
+                .build();
+    }
+
+    public static User getUser(){
+        return User.builder()
                 .id(1)
                 .name("user-test-1")
                 .build();

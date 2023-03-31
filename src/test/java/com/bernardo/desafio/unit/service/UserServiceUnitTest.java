@@ -2,6 +2,7 @@ package com.bernardo.desafio.unit.service;
 
 import com.bernardo.desafio.domain.mother.UserMother;
 import com.bernardo.desafio.model.dto.UserDto;
+import com.bernardo.desafio.model.entities.User;
 import com.bernardo.desafio.model.exception.ConflictException;
 import com.bernardo.desafio.model.mapper.UserMapper;
 import com.bernardo.desafio.repositories.UserRepository;
@@ -29,8 +30,9 @@ public class UserServiceUnitTest implements WithAssertions {
     @Test
     void givenAnAttemptToCreateAnUserWhenAlreadyExistOneWithTheGivenNameThenThrowConflictError(){
         UserDto userDto = UserMother.getUserDto();
+        User user = UserMother.getUser();
 
-        given(userRepository.findByName(userDto.getName())).willReturn(userMapper.dtoToEntity(userDto));
+        given(userRepository.findByName(userDto.getName())).willReturn(user);
 
         assertThatThrownBy(() -> userService.create(userDto)).isInstanceOf(ConflictException.class);
 

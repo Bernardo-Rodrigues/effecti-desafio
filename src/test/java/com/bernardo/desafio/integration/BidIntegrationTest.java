@@ -1,5 +1,6 @@
 package com.bernardo.desafio.integration;
 
+import com.bernardo.desafio.DesafioApplication;
 import com.bernardo.desafio.domain.mother.BidMother;
 import com.bernardo.desafio.domain.mother.UserMother;
 import com.bernardo.desafio.model.dto.BidDto;
@@ -17,13 +18,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.junit.runner.RunWith;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = {DesafioApplication.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
 public class BidIntegrationTest implements WithAssertions {
@@ -48,9 +54,11 @@ public class BidIntegrationTest implements WithAssertions {
 
     @Test
     void givenARequestToListAllTheBidsWhenTheWebCrawlerIsCompleteThenReturnAllOfThem() throws Exception {
-        MockHttpServletResponse response = mvc.perform(get(BID_CONTROLLER_BASE_URL))
-                .andExpect(status().isOk())
-                .andReturn().getResponse();
+        MockHttpServletResponse response = mvc.perform(
+            get(BID_CONTROLLER_BASE_URL)
+                    .header("jwt", JWT))
+            .andExpect(status().isOk())
+            .andReturn().getResponse();
 
         Integer responseLength = response.getContentAsString().split("\"id\":").length - 1;
         Integer itemsSaved = bidRepository.findAll().size();
