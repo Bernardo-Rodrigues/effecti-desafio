@@ -24,8 +24,6 @@ public class UserServiceUnitTest implements WithAssertions {
     UserServiceImpl userService;
     @Mock
     UserRepository userRepository;
-    @Mock
-    UserMapper userMapper;
 
     @Test
     void givenAnAttemptToCreateAnUserWhenAlreadyExistOneWithTheGivenNameThenThrowConflictError(){
