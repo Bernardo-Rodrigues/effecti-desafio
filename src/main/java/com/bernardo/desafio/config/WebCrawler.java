@@ -85,7 +85,8 @@ public class WebCrawler implements CommandLineRunner {
                                 navigateModalityPage(li.getElementsByTag("a").attr("href"), modalityName);
                             } else if (isBid) {
                                 String BidPath = li.getElementsByClass("nome-objeto").first().getElementsByTag("a").attr("href");
-                                Document bidPage = jsoupConnect(HOME_PATH + BidPath);
+                                String link = HOME_PATH + BidPath;
+                                Document bidPage = jsoupConnect(link);
 
                                 Element bidDetails = bidPage.getElementsByClass("licitacoes detalhes").first();
                                 Element basicInfo = bidPage.getElementsByClass("info-basicas").first();
@@ -104,6 +105,7 @@ public class WebCrawler implements CommandLineRunner {
                                 Bid bid = Bid.builder()
                                         .modality(modality)
                                         .name(name)
+                                        .link(link)
                                         .openingDate(formatDate(day, month, year))
                                         .description(description)
                                         .entity(entity)
@@ -116,10 +118,10 @@ public class WebCrawler implements CommandLineRunner {
                                 Element bidEdictsElement = bidPage.getElementsByClass("docs").first();
                                 bidEdictsElement.getElementsByTag("a").forEach(
                                         (a) -> {
-                                            String link = a.attr("href");
+                                            String edictLink = a.attr("href");
                                             String edictName = a.getElementsByTag("strong").text();
                                             Edict edict = Edict.builder()
-                                                    .link(HOME_PATH + link)
+                                                    .link(HOME_PATH + edictLink)
                                                     .name(edictName)
                                                     .bid(savedBid)
                                                     .build();

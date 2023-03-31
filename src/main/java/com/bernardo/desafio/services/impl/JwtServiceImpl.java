@@ -1,7 +1,9 @@
 package com.bernardo.desafio.services.impl;
 
 import com.bernardo.desafio.model.dto.UserDto;
+import com.bernardo.desafio.model.entities.User;
 import com.bernardo.desafio.model.exception.BadRequestException;
+import com.bernardo.desafio.model.exception.NotFoundException;
 import com.bernardo.desafio.model.exception.UnauthorizedException;
 import com.bernardo.desafio.model.mapper.UserMapper;
 import com.bernardo.desafio.repositories.UserRepository;
@@ -29,6 +31,10 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public String generateToken(String name) {
         Map<String, Object> claims = new HashMap<>();
+
+        User user = userRepository.findByName(name);
+        if(user == null) throw new NotFoundException("User does not exist");
+
         return createToken(claims, name);
     }
 

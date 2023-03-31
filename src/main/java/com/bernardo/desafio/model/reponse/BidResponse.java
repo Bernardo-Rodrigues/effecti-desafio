@@ -24,6 +24,8 @@ public class BidResponse {
     Modality modality;
     @JsonProperty("nome")
     String name;
+    @JsonProperty("link")
+    String link;
     @JsonProperty("dataDeAbertura")
     LocalDate openingDate;
     @JsonProperty("descricao")

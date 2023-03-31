@@ -18,6 +18,7 @@ public class BidDto {
     Integer id;
     Modality modality;
     String name;
+    String link;
     LocalDate openingDate;
     String description;
     String entity;

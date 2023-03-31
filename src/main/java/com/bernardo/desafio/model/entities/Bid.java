@@ -21,6 +21,7 @@ public class Bid {
     @JoinColumn(name = "modalityId")
     Modality modality;
     String name;
+    String link;
     LocalDate openingDate;
     @Column(columnDefinition = "text")
     String description;
