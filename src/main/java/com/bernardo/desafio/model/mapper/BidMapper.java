@@ -10,6 +10,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BidMapper {
-    List<BidDto> entityListToDtoList(List<Bid> entityList);
+    BidDto entityToDto(Bid entity);
     List<BidResponse> dtoListToResponseList(List<BidDto> dtoList);
 }

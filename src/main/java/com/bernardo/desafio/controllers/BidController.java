@@ -24,8 +24,9 @@ public class BidController {
     BidMapper bidMapper;
 
     @GetMapping
-    public ResponseEntity<List<BidResponse>> list(){
-        List<BidDto> dtoList = bidService.list();
+    public ResponseEntity<List<BidResponse>> list(@RequestHeader(value = "jwt") String jwt){
+        UserDto userDto = jwtService.validateToken(jwt);
+        List<BidDto> dtoList = bidService.list(userDto.getId());
         return ResponseEntity.ok().body(bidMapper.dtoListToResponseList(dtoList));
     }
 

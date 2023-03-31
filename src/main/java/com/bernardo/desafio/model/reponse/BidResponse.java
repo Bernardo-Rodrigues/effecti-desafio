@@ -38,4 +38,6 @@ public class BidResponse {
     Double value;
     @JsonProperty("editais")
     List<Edict> edicts;
+    @JsonProperty("lida")
+    Boolean read;
 }

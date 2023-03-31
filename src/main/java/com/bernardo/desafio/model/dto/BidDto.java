@@ -25,4 +25,5 @@ public class BidDto {
     String local;
     Double value;
     List<Edict> edicts;
+    Boolean read;
 }

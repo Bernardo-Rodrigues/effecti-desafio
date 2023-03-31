@@ -6,6 +6,6 @@ import com.bernardo.desafio.model.dto.UserDto;
 import java.util.List;
 
 public interface BidService {
-    List<BidDto> list();
+    List<BidDto> list(Integer userId);
     void read(UserDto userDto, Integer bidId);
 }
