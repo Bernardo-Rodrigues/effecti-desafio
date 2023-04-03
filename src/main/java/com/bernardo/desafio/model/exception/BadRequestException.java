@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class BadRequestException extends RuntimeException {
 
-    HttpStatus status = HttpStatus.UNAUTHORIZED;
+    HttpStatus status = HttpStatus.BAD_REQUEST;
 
     public BadRequestException(String reason) {
         super(reason);

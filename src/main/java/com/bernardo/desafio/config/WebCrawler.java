@@ -2,10 +2,9 @@ package com.bernardo.desafio.config;
 
 import com.bernardo.desafio.model.entities.Bid;
 import com.bernardo.desafio.model.entities.Edict;
-import com.bernardo.desafio.model.entities.Modality;
+import com.bernardo.desafio.model.enums.Modality;
 import com.bernardo.desafio.repositories.BidRepository;
 import com.bernardo.desafio.repositories.EdictRepository;
-import com.bernardo.desafio.repositories.ModalityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,6 @@ public class WebCrawler implements CommandLineRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebCrawler.class);
     List<String> tableColumns = new ArrayList<>();
 
-    @Autowired
-    ModalityRepository modalityRepository;
     @Autowired
     BidRepository bidRepository;
     @Autowired
@@ -101,7 +98,7 @@ public class WebCrawler implements CommandLineRunner {
                                 String local = extractNullableInformation(basicInfo.getElementsByClass("local").first());
                                 Double value = extractValueInformation(basicInfo.getElementsByClass("valor").first());
 
-                                Modality modality = modalityRepository.findByName(modalityName);
+                                Modality modality = Modality.fromString(modalityName);
                                 Bid bid = Bid.builder()
                                         .modality(modality)
                                         .name(name)

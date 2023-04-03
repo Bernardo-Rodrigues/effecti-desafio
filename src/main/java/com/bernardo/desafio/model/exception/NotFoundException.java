@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class NotFoundException extends RuntimeException {
 
-    HttpStatus status = HttpStatus.UNAUTHORIZED;
+    HttpStatus status = HttpStatus.NOT_FOUND;
 
     public NotFoundException(String reason) {
         super(reason);

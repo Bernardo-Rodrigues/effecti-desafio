@@ -5,6 +5,7 @@ import com.bernardo.desafio.model.dto.UserDto;
 import com.bernardo.desafio.model.entities.Bid;
 import com.bernardo.desafio.model.entities.Reading;
 import com.bernardo.desafio.model.entities.pk.ReadingPk;
+import com.bernardo.desafio.model.enums.Modality;
 import com.bernardo.desafio.model.exception.NotFoundException;
 import com.bernardo.desafio.model.interfaces.Read;
 import com.bernardo.desafio.model.mapper.BidMapper;
@@ -33,9 +34,21 @@ public class BidServiceImpl implements BidService {
 
 
     @Override
-    public List<BidDto> list(Integer userId) {
-        List<Bid> bidList = bidRepository.findAll();
-        List<Read> readList = bidRepository.findAllWithReadProperty(userId);
+    public List<BidDto> list(Integer userId, Modality modality) {
+        List<Bid> bidList;
+        List<Read> readList;
+
+        if (modality == null) {
+            bidList = bidRepository.findAll();
+            readList = bidRepository.findAllWithReadProperty(userId);
+        } else {
+            bidList = bidRepository.findByModality(modality);
+            readList = bidRepository.findAllWithReadPropertyByModality(userId, modality.toString());
+        }
+
+        System.out.println(bidList);
+        System.out.println(readList);
+
         List<BidDto> dtoList = new ArrayList<>();
 
         IntStream.range(0, bidList.size()).forEach(index -> {

@@ -1,7 +1,7 @@
 package com.bernardo.desafio.model.reponse;
 
 import com.bernardo.desafio.model.entities.Edict;
-import com.bernardo.desafio.model.entities.Modality;
+import com.bernardo.desafio.model.enums.Modality;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

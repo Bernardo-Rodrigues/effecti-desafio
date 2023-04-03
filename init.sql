@@ -5,29 +5,19 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT users_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS public.modalities
-(
-    id integer NOT NULL,
-    name character varying(255) COLLATE pg_catalog."default",
-    CONSTRAINT modalities_pkey PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS public.bids
 (
-    id integer NOT NULL,
+    id integer NOT NULL DEFAULT 'nextval('bids_id_seq'::regclass)',
     description text COLLATE pg_catalog."default",
     entity character varying(255) COLLATE pg_catalog."default",
+    link character varying(255) COLLATE pg_catalog."default",
     local text COLLATE pg_catalog."default",
+    modality character varying(255) COLLATE pg_catalog."default",
     name character varying(255) COLLATE pg_catalog."default",
     opening_date date,
     sector character varying(255) COLLATE pg_catalog."default",
     value double precision,
-    modality_id integer,
-    CONSTRAINT bids_pkey PRIMARY KEY (id),
-    CONSTRAINT fkf009gm6glwsgpfdf6utyxvpt7 FOREIGN KEY (modality_id)
-        REFERENCES public.modalities (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+    CONSTRAINT bids_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS public.edicts

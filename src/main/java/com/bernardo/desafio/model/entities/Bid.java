@@ -1,5 +1,6 @@
 package com.bernardo.desafio.model.entities;
 
+import com.bernardo.desafio.model.enums.Modality;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,8 +18,7 @@ public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    @ManyToOne
-    @JoinColumn(name = "modalityId")
+    @Enumerated(EnumType.STRING)
     Modality modality;
     String name;
     String link;

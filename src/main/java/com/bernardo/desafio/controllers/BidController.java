@@ -2,6 +2,7 @@ package com.bernardo.desafio.controllers;
 
 import com.bernardo.desafio.model.dto.BidDto;
 import com.bernardo.desafio.model.dto.UserDto;
+import com.bernardo.desafio.model.enums.Modality;
 import com.bernardo.desafio.model.mapper.BidMapper;
 import com.bernardo.desafio.model.reponse.BidResponse;
 import com.bernardo.desafio.services.BidService;
@@ -24,9 +25,12 @@ public class BidController {
     BidMapper bidMapper;
 
     @GetMapping
-    public ResponseEntity<List<BidResponse>> list(@RequestHeader(value = "jwt") String jwt){
+    public ResponseEntity<List<BidResponse>> list(
+            @RequestParam(required = false) String modality,
+            @RequestHeader(value = "jwt") String jwt
+    ){
         UserDto userDto = jwtService.validateToken(jwt);
-        List<BidDto> dtoList = bidService.list(userDto.getId());
+        List<BidDto> dtoList = bidService.list(userDto.getId(), Modality.fromString(modality));
         return ResponseEntity.ok().body(bidMapper.dtoListToResponseList(dtoList));
     }
 

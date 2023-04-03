@@ -1,7 +1,7 @@
 package com.bernardo.desafio.model.dto;
 
 import com.bernardo.desafio.model.entities.Edict;
-import com.bernardo.desafio.model.entities.Modality;
+import com.bernardo.desafio.model.enums.Modality;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

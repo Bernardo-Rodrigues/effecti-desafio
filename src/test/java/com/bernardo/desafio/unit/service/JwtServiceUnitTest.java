@@ -2,6 +2,7 @@ package com.bernardo.desafio.unit.service;
 
 import com.bernardo.desafio.domain.mother.UserMother;
 import com.bernardo.desafio.model.dto.UserDto;
+import com.bernardo.desafio.model.exception.NotFoundException;
 import com.bernardo.desafio.repositories.UserRepository;
 import com.bernardo.desafio.services.impl.JwtServiceImpl;
 import org.assertj.core.api.WithAssertions;
@@ -27,6 +28,6 @@ public class JwtServiceUnitTest implements WithAssertions {
 
         given(userRepository.findByName(userDto.getName())).willReturn(null);
 
-        assertThatThrownBy(() -> jwtService.generateToken(userDto.getName())).isInstanceOf(NotActiveException.class);
+        assertThatThrownBy(() -> jwtService.generateToken(userDto.getName())).isInstanceOf(NotFoundException.class);
     }
 }
