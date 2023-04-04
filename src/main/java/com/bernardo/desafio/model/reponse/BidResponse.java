@@ -2,6 +2,7 @@ package com.bernardo.desafio.model.reponse;
 
 import com.bernardo.desafio.model.entities.Edict;
 import com.bernardo.desafio.model.enums.Modality;
+import com.bernardo.desafio.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,8 @@ public class BidResponse {
     String name;
     @JsonProperty("link")
     String link;
+    @JsonProperty("status")
+    Status status;
     @JsonProperty("dataDeAbertura")
     LocalDate openingDate;
     @JsonProperty("descricao")

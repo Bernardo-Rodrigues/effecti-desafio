@@ -3,6 +3,7 @@ package com.bernardo.desafio.config;
 import com.bernardo.desafio.model.entities.Bid;
 import com.bernardo.desafio.model.entities.Edict;
 import com.bernardo.desafio.model.enums.Modality;
+import com.bernardo.desafio.model.enums.Status;
 import com.bernardo.desafio.repositories.BidRepository;
 import com.bernardo.desafio.repositories.EdictRepository;
 import org.slf4j.Logger;
@@ -62,14 +63,14 @@ public class WebCrawler implements CommandLineRunner {
 
                         if(hasLink && reportedOrInProgress) {
                             String modalityPath = columns.get(index).getElementsByTag("a").attr("href");
-                            navigateModalityPage(modalityPath, modalityName);
+                            navigateModalityPage(modalityPath, modalityName, tableColumns.get(index));
                         }
                     });
                 }
         );
     }
 
-    private void navigateModalityPage(String modalityBidsPath, String modalityName){
+    private void navigateModalityPage(String modalityBidsPath, String modalityName, String status){
         Document modalityPage = jsoupConnect(HOME_PATH + modalityBidsPath);
 
         modalityPage.getElementsByClass("item-lista").first()
@@ -79,7 +80,7 @@ public class WebCrawler implements CommandLineRunner {
                             boolean isBid = li.getElementsByTag("div").hasClass("data");
 
                             if (isNavigationButtonNexPage) {
-                                navigateModalityPage(li.getElementsByTag("a").attr("href"), modalityName);
+                                navigateModalityPage(li.getElementsByTag("a").attr("href"), modalityName, status);
                             } else if (isBid) {
                                 String BidPath = li.getElementsByClass("nome-objeto").first().getElementsByTag("a").attr("href");
                                 String link = HOME_PATH + BidPath;
@@ -103,6 +104,7 @@ public class WebCrawler implements CommandLineRunner {
                                         .modality(modality)
                                         .name(name)
                                         .link(link)
+                                        .status(Status.valueOf(status.toUpperCase()))
                                         .openingDate(formatDate(day, month, year))
                                         .description(description)
                                         .entity(entity)

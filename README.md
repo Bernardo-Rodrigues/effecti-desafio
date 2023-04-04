@@ -10,30 +10,32 @@ A Effecti é uma plataforma para licitantes, então o desafio era construir um s
 
 - GET - /bids
   - Descrição: Retorna a lista de licitações
-  - Headers: ["jwt": "string"]
+  - Headers: 
+    - "jwt": "string"
+  - Query Params: 
+    - "modality": "string" (Opcional, usado para filtrar a busca das licitações)
   - Respostas: 
       - 200 OK - Content: 
             [
               {
                 "id": 0,
-                "modalidade": {
-                  "name": "string"
-                },
+                "modalidade": "string",
                 "nome": "string",
                 "link": "string",
+                "status": "string",
                 "dataDeAbertura": "YYYY-MM-DD",
                 "descricao": "string",
                 "entidade": "string",
                 "setor": "string",
                 "local": "string",
-                "valorGlobal": 0,
+                "valorGlobal": double,
                 "editais": [
                   {
                     "name": "string",
                     "link": "string"
                   }
                 ],
-                "lida": true
+                "lida": boolean
               }
             ]
       - 400 BAD REQUEST - Content: { "type": "BadRequestException", "message": "Wrong format of JWT"}

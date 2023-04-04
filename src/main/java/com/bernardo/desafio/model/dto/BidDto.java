@@ -2,6 +2,7 @@ package com.bernardo.desafio.model.dto;
 
 import com.bernardo.desafio.model.entities.Edict;
 import com.bernardo.desafio.model.enums.Modality;
+import com.bernardo.desafio.model.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class BidDto {
     Modality modality;
     String name;
     String link;
+    Status status;
     LocalDate openingDate;
     String description;
     String entity;

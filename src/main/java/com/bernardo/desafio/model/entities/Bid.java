@@ -1,6 +1,7 @@
 package com.bernardo.desafio.model.entities;
 
 import com.bernardo.desafio.model.enums.Modality;
+import com.bernardo.desafio.model.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,8 @@ public class Bid {
     Modality modality;
     String name;
     String link;
+    @Enumerated(EnumType.STRING)
+    Status status;
     LocalDate openingDate;
     @Column(columnDefinition = "text")
     String description;
